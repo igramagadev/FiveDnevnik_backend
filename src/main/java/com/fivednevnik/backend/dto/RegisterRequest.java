@@ -1,7 +1,9 @@
 package com.fivednevnik.backend.dto;
 
+import com.fivednevnik.backend.model.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,4 +27,7 @@ public class RegisterRequest {
     @NotBlank(message = "Email не может быть пустым")
     @Email(message = "Некорректный формат email")
     private String email;
+    
+    @NotNull(message = "Роль не может быть пустой")
+    private Role role;
 }

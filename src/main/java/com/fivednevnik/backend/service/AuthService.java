@@ -48,13 +48,14 @@ public class AuthService {
         User user = userRepository.findByUsername(loginRequest.getUsername())
                 .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
         
-        UserDto userDto = new UserDto(
-                user.getId(),
-                user.getUsername(),
-                user.getFullName(),
-                user.getEmail(),
-                user.getRoles()
-        );
+        UserDto userDto = UserDto.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .fullName(user.getFullName())
+                .email(user.getEmail())
+                .role(user.getRole())
+                .active(user.isActive())
+                .build();
 
         return new AuthResponse(jwt, userDto);
     }
@@ -73,7 +74,7 @@ public class AuthService {
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         user.setFullName(registerRequest.getFullName());
         user.setEmail(registerRequest.getEmail());
-        user.setRoles(new HashSet<>(Collections.singletonList(Role.ROLE_STUDENT)));
+        user.setRole(registerRequest.getRole());
 
         User savedUser = userRepository.save(user);
 
@@ -87,13 +88,14 @@ public class AuthService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = tokenProvider.generateToken(authentication);
 
-        UserDto userDto = new UserDto(
-                savedUser.getId(),
-                savedUser.getUsername(),
-                savedUser.getFullName(),
-                savedUser.getEmail(),
-                savedUser.getRoles()
-        );
+        UserDto userDto = UserDto.builder()
+                .id(savedUser.getId())
+                .username(savedUser.getUsername())
+                .fullName(savedUser.getFullName())
+                .email(savedUser.getEmail())
+                .role(savedUser.getRole())
+                .active(savedUser.isActive())
+                .build();
 
         return new AuthResponse(jwt, userDto);
     }

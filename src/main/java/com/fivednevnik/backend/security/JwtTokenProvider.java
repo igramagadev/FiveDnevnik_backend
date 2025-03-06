@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -39,13 +40,14 @@ public class JwtTokenProvider {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
         
-        String authorities = authentication.getAuthorities().stream()
+        String authority = authentication.getAuthorities().stream()
+                .findFirst()
                 .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining(","));
+                .orElse("");
 
         return Jwts.builder()
                 .setSubject(userDetails.getUsername())
-                .claim("roles", authorities)
+                .claim("role", authority)
                 .setIssuedAt(new Date())
                 .setExpiration(expiryDate)
                 .signWith(getSigningKey())
@@ -69,11 +71,8 @@ public class JwtTokenProvider {
                 .parseClaimsJws(token)
                 .getBody();
 
-        String roles = claims.get("roles", String.class);
-        
-        return Arrays.stream(roles.split(","))
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
+        String role = claims.get("role", String.class);
+        return Collections.singletonList(new SimpleGrantedAuthority(role));
     }
 
     public boolean validateToken(String token) {

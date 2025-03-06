@@ -4,8 +4,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.HashSet;
-import java.util.Set;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -24,14 +25,24 @@ public class User {
     @Column(nullable = false)
     private String password;
     
-    @Column(nullable = false)
+    @Column(name = "full_name")
     private String fullName;
     
     @Column(nullable = false, unique = true)
     private String email;
     
     @Enumerated(EnumType.STRING)
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
-    private Set<Role> roles = new HashSet<>();
+    @Column(nullable = false)
+    private Role role;
+    
+    @Column(nullable = false)
+    private boolean active = true;
+    
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+    
+    @UpdateTimestamp
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt;
 } 

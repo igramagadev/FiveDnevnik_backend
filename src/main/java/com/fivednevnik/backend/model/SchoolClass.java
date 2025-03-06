@@ -4,6 +4,10 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,6 +29,10 @@ public class SchoolClass {
     private Integer grade;
     
     @ManyToOne
+    @JoinColumn(name = "school_id", nullable = false)
+    private School school;
+    
+    @ManyToOne
     @JoinColumn(name = "teacher_id")
     private User classTeacher;
     
@@ -35,4 +43,12 @@ public class SchoolClass {
         inverseJoinColumns = @JoinColumn(name = "student_id")
     )
     private Set<User> students = new HashSet<>();
+    
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+    
+    @UpdateTimestamp
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt;
 } 
