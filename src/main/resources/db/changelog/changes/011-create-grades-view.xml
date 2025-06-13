@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.26.xsd">
+
+    <changeSet id="011-create-grades-view" author="fivednevnik">
+        <sql>
+            CREATE OR REPLACE VIEW PUBLIC.grades_view AS SELECT 
+                g.id, 
+                g.student_id, 
+                g.subject_id, 
+                g.teacher_id, 
+                g.grade_value as "grade_value",
+                g.weight, 
+                g.description, 
+                g.date, 
+                g.is_final, 
+                g.period, 
+                g.grade_type, 
+                g.type, 
+                g.period_id, 
+                g.period_type
+            FROM 
+                grades g
+        </sql>
+    </changeSet>
+</databaseChangeLog> 

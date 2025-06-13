@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.26.xsd">
+
+    <changeSet id="004-add-students-to-classes" author="fivednevnik">
+        <comment>Добавление связей между учениками и классами</comment>
+
+        <insert tableName="users">
+            <column name="username">student2</column>
+            <column name="password">{bcrypt}$2a$10$dXJ3SW6G7P50lGmMkkmwe.20cQQubK3.HZWzG3YB1tlRy.fqvM/BG</column>
+            <column name="first_name">Мария</column>
+            <column name="last_name">Иванова</column>
+            <column name="email">ivanova@fivednevnik.com</column>
+            <column name="role">STUDENT</column>
+            <column name="class_name">9А</column>
+            <column name="school_name">МБОУ СОШ №1</column>
+            <column name="created_at" valueDate="now()"/>
+            <column name="updated_at" valueDate="now()"/>
+        </insert>
+        
+        <insert tableName="users">
+            <column name="username">student3</column>
+            <column name="password">{bcrypt}$2a$10$dXJ3SW6G7P50lGmMkkmwe.20cQQubK3.HZWzG3YB1tlRy.fqvM/BG</column>
+            <column name="first_name">Александр</column>
+            <column name="last_name">Петров</column>
+            <column name="email">petrov@fivednevnik.com</column>
+            <column name="role">STUDENT</column>
+            <column name="class_name">9А</column>
+            <column name="school_name">МБОУ СОШ №1</column>
+            <column name="created_at" valueDate="now()"/>
+            <column name="updated_at" valueDate="now()"/>
+        </insert>
+
+        <insert tableName="users">
+            <column name="username">student10b_1</column>
+            <column name="password">{bcrypt}$2a$10$dXJ3SW6G7P50lGmMkkmwe.20cQQubK3.HZWzG3YB1tlRy.fqvM/BG</column>
+            <column name="first_name">Дмитрий</column>
+            <column name="last_name">Соколов</column>
+            <column name="email">sokolov@fivednevnik.com</column>
+            <column name="role">STUDENT</column>
+            <column name="class_name">10Б</column>
+            <column name="school_name">МБОУ СОШ №1</column>
+            <column name="created_at" valueDate="now()"/>
+            <column name="updated_at" valueDate="now()"/>
+        </insert>
+        
+        <insert tableName="users">
+            <column name="username">student10b_2</column>
+            <column name="password">{bcrypt}$2a$10$dXJ3SW6G7P50lGmMkkmwe.20cQQubK3.HZWzG3YB1tlRy.fqvM/BG</column>
+            <column name="first_name">Екатерина</column>
+            <column name="last_name">Михайлова</column>
+            <column name="email">mikhaylova@fivednevnik.com</column>
+            <column name="role">STUDENT</column>
+            <column name="class_name">10Б</column>
+            <column name="school_name">МБОУ СОШ №1</column>
+            <column name="created_at" valueDate="now()"/>
+            <column name="updated_at" valueDate="now()"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog> 

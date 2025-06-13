@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <include file="changes/001-initial-schema.xml" relativeToChangelogFile="true"/>
+    <include file="changes/002-academic-periods-and-schedules.xml" relativeToChangelogFile="true"/>
+
+    <include file="db/changelog/changes/20250601-02-create-attendance-table.xml"/>
+
+    <include file="db/changelog/changes/002-initial-data.xml"/>
+
+    <include file="db/changelog/changes/20250602-02-add-class-id-to-users.xml"/>
+    <include file="db/changelog/changes/003-new-data.xml"/>
+    <include file="db/changelog/changes/004-add-students-to-classes.xml"/>
+    <include file="db/changelog/changes/004-add-missing-columns-to-grades.xml"/>
+    <include file="db/changelog/changes/005-add-android-compatible-columns.xml"/>
+    <include file="db/changelog/changes/006-add-missing-columns.xml"/>
+    <include file="db/changelog/changes/007-add-test-class.xml"/>
+    <include file="db/changelog/changes/008-add-missing-data.xml"/>
+    <include file="db/changelog/changes/011-create-grades-view.xml"/>
+
+    <include file="db/changelog/changes/012-migrate-existing-grades-data.xml"/>
+
+</databaseChangeLog> 

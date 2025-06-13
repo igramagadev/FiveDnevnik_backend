@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.26.xsd">
+
+    <changeSet id="20240602-02-add-class-id-to-users-fixed" author="fivednevnik">
+        <comment>Add class_id column to users table</comment>
+        
+        <addColumn tableName="users">
+            <column name="class_id" type="BIGINT">
+                <constraints nullable="true" foreignKeyName="fk_user_class" references="classes(id)"/>
+            </column>
+        </addColumn>
+        
+        <createIndex indexName="idx_user_class_id" tableName="users">
+            <column name="class_id"/>
+        </createIndex>
+
+        <update tableName="users">
+            <column name="class_id">1</column>
+            <where>class_name = '9А'</where>
+        </update>
+        
+        <update tableName="users">
+            <column name="class_id">2</column>
+            <where>class_name = '10Б'</where>
+        </update>
+        
+        <update tableName="users">
+            <column name="class_id">3</column>
+            <where>class_name = '11А'</where>
+        </update>
+    </changeSet>
+
+</databaseChangeLog> 

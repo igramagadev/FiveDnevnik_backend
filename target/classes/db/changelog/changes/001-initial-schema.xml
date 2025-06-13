@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.26.xsd">
+
+    <changeSet id="001-create-users-table" author="fivednevnik">
+        <createTable tableName="users">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="username" type="VARCHAR(50)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(100)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="role" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="recorded_by" type="VARCHAR(100)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="class_name" type="VARCHAR(20)"/>
+            <column name="school_name" type="VARCHAR(100)"/>
+            <column name="phone" type="VARCHAR(20)"/>
+            <column name="avatar_url" type="VARCHAR(255)"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueDate="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP" defaultValueDate="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="002-create-classes-table" author="fivednevnik">
+        <createTable tableName="classes">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(20)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="academic_year" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="class_teacher_id" type="BIGINT">
+                <constraints nullable="true" foreignKeyName="fk_class_teacher" references="users(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="003-create-subjects-table" author="fivednevnik">
+        <createTable tableName="subjects">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="color" type="VARCHAR(7)" defaultValue="#3F51B5"/>
+        </createTable>
+    </changeSet>
+    
+    <changeSet id="004-create-schedule-table" author="fivednevnik">
+        <createTable tableName="schedule_items">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="class_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_schedule_class" references="classes(id)"/>
+            </column>
+            <column name="subject_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_schedule_subject" references="subjects(id)"/>
+            </column>
+            <column name="teacher_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_schedule_teacher" references="users(id)"/>
+            </column>
+            <column name="day_of_week" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lesson_number" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start_time" type="VARCHAR(5)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="end_time" type="VARCHAR(5)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="classroom" type="VARCHAR(20)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="005-create-grades-table" author="fivednevnik">
+        <createTable tableName="grades">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="student_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_grade_student" references="users(id)"/>
+            </column>
+            <column name="subject_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_grade_subject" references="subjects(id)"/>
+            </column>
+            <column name="teacher_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_grade_teacher" references="users(id)"/>
+            </column>
+            <column name="grade_value" type="VARCHAR(200)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="type_compat" type="VARCHAR(200)">
+
+            </column>
+            <column name="weight" type="FLOAT" defaultValueNumeric="1.0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="date" type="TIMESTAMP" defaultValueDate="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="006-create-homework-table" author="fivednevnik">
+        <createTable tableName="homework">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="class_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_homework_class" references="classes(id)"/>
+            </column>
+            <column name="subject_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_homework_subject" references="subjects(id)"/>
+            </column>
+            <column name="teacher_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_homework_teacher" references="users(id)"/>
+            </column>
+            <column name="title" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="due_date" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP" defaultValueDate="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    
+    <changeSet id="007-create-homework-status-table" author="fivednevnik">
+        <createTable tableName="homework_statuses">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="homework_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_homework_status_homework" references="homework(id)"/>
+            </column>
+            <column name="student_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_homework_status_student" references="users(id)"/>
+            </column>
+            <column name="is_completed" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="completed_at" type="TIMESTAMP"/>
+            <column name="comment" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+
+
+    <changeSet id="009-create-messages-table" author="fivednevnik">
+        <createTable tableName="messages">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="sender_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_message_sender" references="users(id)"/>
+            </column>
+            <column name="recipient_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_message_recipient" references="users(id)"/>
+            </column>
+            <column name="subject" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="content" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_read" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="reply_to_id" type="BIGINT">
+                <constraints nullable="true" foreignKeyName="fk_message_reply" references="messages(id)"/>
+            </column>
+            <column name="sent_at" type="TIMESTAMP" defaultValueDate="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="read_at" type="TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+    <!-- Индексы для оптимизации запросов -->
+    <changeSet id="010-add-indices" author="fivednevnik">
+        <createIndex indexName="idx_users_role" tableName="users">
+            <column name="role"/>
+        </createIndex>
+        
+        <createIndex indexName="idx_users_class_name" tableName="users">
+            <column name="class_name"/>
+        </createIndex>
+        
+        <createIndex indexName="idx_grades_student" tableName="grades">
+            <column name="student_id"/>
+        </createIndex>
+        
+        <createIndex indexName="idx_grades_subject" tableName="grades">
+            <column name="subject_id"/>
+        </createIndex>
+        
+        <createIndex indexName="idx_grades_date" tableName="grades">
+            <column name="date"/>
+        </createIndex>
+
+
+
+        <createIndex indexName="idx_messages_sender" tableName="messages">
+            <column name="sender_id"/>
+        </createIndex>
+        
+        <createIndex indexName="idx_messages_recipient" tableName="messages">
+            <column name="recipient_id"/>
+        </createIndex>
+        
+        <createIndex indexName="idx_messages_is_read" tableName="messages">
+            <column name="is_read"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog> 

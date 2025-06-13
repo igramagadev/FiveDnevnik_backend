@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.26.xsd">
+
+
+    <changeSet id="007-add-test-class-2" author="fivednevnik">
+        <insert tableName="users">
+            <column name="username">test_student_10b</column>
+            <column name="password">{bcrypt}$2a$10$dXJ3SW6G7P50lGmMkkmwe.20cQQubK3.HZWzG3YB1tlRy.fqvM/BG</column>
+            <column name="first_name">Тестовый</column>
+            <column name="last_name">Ученик</column>
+            <column name="email">test_student_10b@fivednevnik.com</column>
+            <column name="role">STUDENT</column>
+            <column name="class_name">10Б</column>
+            <column name="class_id">2</column>
+            <column name="school_name">МБОУ СОШ №1</column>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog> 

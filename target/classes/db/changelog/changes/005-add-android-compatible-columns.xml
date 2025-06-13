@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.26.xsd">
+
+    <changeSet id="005-add-android-compatible-columns" author="fivednevnik">
+        <addColumn tableName="grades">
+            <column name="type" type="VARCHAR(50)" defaultValue="REGULAR">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+
+        <addColumn tableName="grades">
+            <column name="period_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+
+        <addColumn tableName="grades">
+            <column name="period_type" type="VARCHAR(50)" defaultValue="QUARTER">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+
+        <addColumn tableName="grades">
+            <column name="class_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+
+        <sql>
+            UPDATE grades SET type = grade_type WHERE grade_type IS NOT NULL;
+        </sql>
+    </changeSet>
+    
+</databaseChangeLog> 
